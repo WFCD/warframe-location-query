@@ -21,5 +21,10 @@
   "bugs": {
     "url": "https://gitlab.com/tobiah/warframe-location-query/issues"
   },
-  "homepage": "https://gitlab.com/tobiah/warframe-location-query#README"
+  "homepage": "https://gitlab.com/tobiah/warframe-location-query#README",
+  "dependencies": {
+    "json-query": "^2.1.1",
+    "node-md-config": "^2.0.1",
+    "request": "^2.74.0"
+  }
 }
