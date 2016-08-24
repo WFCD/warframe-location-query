@@ -1,0 +1,25 @@
+{
+  "name": "warframe-location-query",
+  "version": "0.0.1",
+  "description": "Query a database of relic drops and locations for looking up where prime parts and relics drop.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/tobiah/warframe-location-query.git"
+  },
+  "keywords": [
+    "warframe",
+    "relics",
+    "prime",
+    "parts"
+  ],
+  "author": "Matej Voboril <matej@voboril.org>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/tobiah/warframe-location-query/issues"
+  },
+  "homepage": "https://gitlab.com/tobiah/warframe-location-query#README"
+}
