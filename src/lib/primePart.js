@@ -1,3 +1,8 @@
+var md = require('node-md-config');
+
+var toTitleCase = require('./_utils.js').toTitleCase;
+var RelicSort =  require('./_utils.js').relicSort;
+
 var PrimePart = function(name, ducats, location){
   this.name = toTitleCase(name);
   this.ducats = ducats;

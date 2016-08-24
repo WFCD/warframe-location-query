@@ -1,18 +1,19 @@
+var md = require('node-md-config');
 var PrimePart = require('./lib/primePart.js');
 var Relic = require('./lib/relic.js');
 
 var ComponentHandler = function (data) {
   this.components = new Array();
   var self = this;
-  if (typeof data.length !== 'undefined') {
+  if (typeof data !== 'undefined' && data != null) {
     data.forEach(function (reliquary) {
       var primeReg = /prime\s?parts?/i;
-      var relicReg = /relics?/i
+      var relicReg = /relics?/i;
       if (primeReg.test(reliquary.type)) {
-        this.components.push(new PrimePart(reliquary.component, reliquary.ducats, reliquary.location));
+        self.components.push(new PrimePart(reliquary.component, reliquary.ducats, reliquary.location));
       }
       else if (relicReg.test(reliquary.type)) {
-        this.components.push(new Relic(reliquary.component, reliquary.location));
+        self.components.push(new Relic(reliquary.component, reliquary.location));
       }
     });
   }

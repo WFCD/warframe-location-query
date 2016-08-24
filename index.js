@@ -2,11 +2,10 @@ var request = require('request');
 var md = require('node-md-config');
 var jsonQuery = require('json-query');
 
-var ComponentsHandler = require('./lib/componentHandler.js')
+var ComponentHandler = require('./src/componentHandler.js')
 
 var setRelicValForCompare = require('./src/lib/_utils.js').setRelicValForCompare;
 var toTitleCase = require('./src/lib/_utils.js').toTitleCase;
-var RelicSort =  require('./src/lib/_utils.js').relicSort;
 
 var maxCacheLength = process.env.LOCATION_MAX_CACHED_TIME || 60000;
 
@@ -49,7 +48,7 @@ LocationQuery.prototype.refresh = function(callback) {
 }
 
 LocationQuery.prototype.retrieve = function(callback) {
-  var url = 'https://nexus-stats.com/api';
+  var url = 'http://xenogelion.com/Hidden/Relics.json';
   var self = this;
   request.get(url, function(err, response, body) {
     if(err) {
@@ -73,10 +72,7 @@ LocationQuery.prototype.retrieve = function(callback) {
       error = new Error('Invalid JSON from ' + url);
       return callback(error);
     }
-    var wrappedData = {
-      items: data
-    }
-    callback(null, wrappedData);
+    callback(null, data);
   });
 }
 
@@ -96,13 +92,14 @@ LocationQuery.prototype.getLocationsForComponent = function(query, callback){
       data: dataCache,
       allowRegexp: true
     });
-    if(typeof results.value === 'undefined'){
+    if(typeof results.value === 'undefined' || results == null){
       callback(new Error("No value for given query - LocationQuery.prototype.getLocationsForComponent"
                          , "warframe-location-query/index.js", 119), null);
       return;
     }
     this.componentHandler = new ComponentHandler(results.value);
     callback(null, this.componentHandler.toString());
+  });
 }
 
 module.exports = LocationQuery;

@@ -1,9 +1,12 @@
+var md = require('node-md-config');
+
 var _utils = require('./_utils.js');
 var RelicChecker = require('../../index.js');
-
+var toTitleCase = require('./_utils.js').toTitleCase;
 
 var locationsFromJson = function(locations){
   var locListReturn = [];
+  consoel.log(locations);
   for(i in locations){
     var location = locations[i] + " | "
     var tokens = [];
