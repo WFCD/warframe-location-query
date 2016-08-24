@@ -1,36 +1,30 @@
-# warframe-nexus-query
+# warframe-location-query
 
-A node project for allowing simple access to the `https://nexus-stats.com/` api.
+A node project for fetching data from `http://xenogelion.com/Hidden/Relics.json` to give data about relic and prime part drops.
 
 ## Installation
 ```
-npm install --save warframe-nexus-query
+npm install --save warframe-location-query
 ```
 
 ## Usage
 
 Require | Module File | Accessor | Description | parameters
 --- | --- | --- | --- | ---
-`warframe-nexus-query` | `index.js` | `.priceCheckQueryString` | Get Query result string | `query`, `callback`
-`warframe-nexus-query` | `index.js` | `.priceCheckQuery` | Get Query result objects, has more parameters available | `query`, `callback`
+`warframe-location-query` | `index.js` | `.getLocationsForComponent` | Get Query result string for a location lookup query | `query`, `callback`
 
 
 ## Objects
 
-Item
+Relic
 
-* `components` - List of component objects
-* `id` - Unique identifier for the Item object
-* `title` - Title of the item
-* `type` - Type of the item
-* `supplyPercent` - Of the total amount of item listings for this object, this is the percent for sale
-* `demandPercent` - Of the total amount of item listings for this object, this is t looking to be bought
-* `supplyAmount`  - Of the total amount of item listings for this object, this is the number for sale
-* `demandAmount`  - Of the total amount of item listings for this object, this is the number looking to be bought
+* `name` - Components fetched
+* `type` - Type of the item - relic
+* `locations` - List of locations where this relic can be found
 
-Component
+Prime Part
 
-* `name` -  Name of the component
-* `avgPrice` - Average platinum price 
-* `rawAverage` - Raw average (non-rounded) price of the component
-* `data` - Array of Miscellaneous data
+* `name` - Components fetched
+* `type` - Type of the item - Prime part
+* `locations` - List of relics in which this prime part can be found
+* `ducats` - Value of priime part in ducats
