@@ -5,8 +5,9 @@ var RelicSort =  require('./_utils.js').relicSort;
 
 var PrimePart = function(name, ducats, location){
   this.name = toTitleCase(name);
-  this.ducats = ducats;
+  this.ducats = typeof ducats !== 'undefined' ? ducats : '0' ;
   this.locations = location;
+  this.type = 'Prime Part';
 }
 
 

@@ -82,6 +82,21 @@ LocationQuery.prototype.processRefreshQueue = function(err, data) {
   }
 }
 
+LocationQuery.prototype.relicHasDropLocation = function(relic){
+  var hasDropLocation = false;
+  this.getData(function(err, dataCache){
+    if(err) {
+      return console.error(err);
+    }
+    var results = jsonQuery('components[*component~/'+relic+'/i]', {
+      data: dataCache,
+      allowRegexp: true
+    });
+    hasDropLocation = results.value.length > 0 ? true : false;
+  });
+  return hasDropLocation;
+}
+
 LocationQuery.prototype.getLocationsForComponent = function(query, callback){
   this.getData(function(err, dataCache){
     var defaultString = md.codeMulti+"Operator, there is no such item location available."+md.blockEnd;
@@ -98,7 +113,7 @@ LocationQuery.prototype.getLocationsForComponent = function(query, callback){
       return;
     }
     this.componentHandler = new ComponentHandler(results.value);
-    callback(null, this.componentHandler.toString());
+    callback(null, this.componentHandler.toStringList());
   });
 }
 

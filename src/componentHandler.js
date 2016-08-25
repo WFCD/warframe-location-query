@@ -21,12 +21,47 @@ var ComponentHandler = function (data) {
 
 ComponentHandler.prototype.toString = function () {
   var componentString = md.codeMulti;
-  componentString += this.components.join(md.doubleReturn);
+  var maxLen = 4;
+  var self = this;
+  var listToJoin = [];
+  this.components.forEach(function(component){
+    if(component.type === 'Relic' && listToJoin.length >= 1){
+      //skip
+    }else{
+      listToJoin.push(component);
+    }
+  });
+
+  componentString += listToJoin.slice(0,maxLen).join(md.doubleReturn);
   if (componentString === md.codeMulti) {
     componentString += "Operator, no relics available for that query.";
   }
+  if(this.components.length > maxLen){
+    componentString+= md.doubleReturn+"Your query returned more results than I can display, operator. Refine your search for more accurate results.";
+  }
   componentString += md.blockEnd;
   return componentString;
+}
+
+ComponentHandler.prototype.toStringList = function() {
+  var componentStringList = [];
+  var maxLen = 4;
+  var self = this;
+  this.components.forEach(function(component){
+    if(component.type === 'Relic' && componentStringList.length >= 3){
+      //skip
+    }else{
+      componentStringList.push(component.toString());
+    }
+  });
+
+  if (componentStringList === []) {
+    componentStringList.push("Operator, no relics available for that query.");
+  }
+  if(this.components.length > maxLen){
+    componentStringList.push("Your query returned more results than I can display, operator. Refine your search for more accurate results.");
+  }
+  return componentStringList;
 }
 
 ComponentHandler.prototype.getAll = function(){
