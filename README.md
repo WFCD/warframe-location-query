@@ -13,6 +13,11 @@ Require | Module File | Accessor | Description | parameters
 --- | --- | --- | --- | ---
 `warframe-location-query` | `index.js` | `.getLocationsForComponent` | Get Query result string for a location lookup query | `query`, `callback`
 
+## Environment variables
+
+Variable | example | default
+--- | --- | ---
+`LOCATION_MAX_CACHED_TIME` | `600000` | `30000`
 
 ## Objects
 
