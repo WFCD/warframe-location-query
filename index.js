@@ -82,18 +82,32 @@ LocationQuery.prototype.processRefreshQueue = function(err, data) {
   }
 }
 
-LocationQuery.prototype.relicHasDropLocation = function(relic){
-  var hasDropLocation = false;
-  this.getData(function(err, dataCache){
+LocationQuery.prototype.relicHasDropLocation = function(query){
+  var hasDropLocation = true;
+  this.getLocationsForComponent(query, function(err, list){
+    if(err) {
+      return callback(err, '');
+    }
+    if(list.length < 2){
+      hasDropLocation = false;
+    }
+  });
+  /*this.getData(function(err, dataCache){
     if(err) {
       return console.error(err);
     }
-    var results = jsonQuery('components[*component~/'+relic+'/i]', {
+    var results = jsonQuery('components[*component~/'+query+'/i]', {
       data: dataCache,
       allowRegexp: true
-    });
-    hasDropLocation = results.value.length > 0 ? true : false;
-  });
+    });    
+    if(typeof results.value === 'undefined' || results == null){
+      callback(new Error("No value for given query - LocationQuery.prototype.relicHasDropLocation"
+                         , "warframe-location-query/index.js", 119), null);
+      return;
+    }
+    console.log(results);
+    hasDropLocation = results.value.length > 1 ? true : false;
+  });*/
   return hasDropLocation;
 }
 

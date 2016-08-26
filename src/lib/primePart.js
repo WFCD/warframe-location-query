@@ -4,10 +4,19 @@ var toTitleCase = require('./_utils.js').toTitleCase;
 var RelicSort =  require('./_utils.js').relicSort;
 
 var PrimePart = function(name, ducats, location){
+  var LocationQuery = require('../../index.js');
+  var relicCheckr = new LocationQuery();
   this.name = toTitleCase(name);
   this.ducats = typeof ducats !== 'undefined' ? ducats : '0' ;
-  this.locations = location;
+  this.locations = [];
   this.type = 'Prime Part';
+  var self = this;
+  location.forEach(function(relic){
+    var relicBase = relic.replace(/\(\w+\)/i, '').replace(/relic/i, '').toLowerCase();
+    var relicIsVaulted = !relicCheckr.relicHasDropLocation(relicBase);
+    var stringToPush = location + (relicIsVaulted  ? "  - Vaulted" : "");
+    self.locations.push(stringToPush);
+  });
 }
 
 

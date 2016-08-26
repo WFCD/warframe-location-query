@@ -55,7 +55,7 @@ ComponentHandler.prototype.toStringList = function() {
     }
   });
 
-  if (componentStringList === []) {
+  if (componentStringList.length<1) {
     componentStringList.push("Operator, no relics available for that query.");
   }
   if(this.components.length > maxLen){

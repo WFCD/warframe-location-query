@@ -23,9 +23,9 @@ var locationsFromJson = function(locations){
 var Relic = function(name, locations){
   var LocationQuery = require('../../index.js');
   var relicCheckr = new LocationQuery();
-  var relicVaulted = relicCheckr.relicHasDropLocation();
-  this.name = toTitleCase(name) + (relicVaulted ? "(Vaulted)" : "");
-  this.locations = relicVaulted ? ["Prime Vault"] : locationsFromJson(locations);
+  var relicIsVaulted = locations == '';
+  this.name = toTitleCase(name) + (relicIsVaulted ? " - Vaulted" : "");
+  this.locations = relicIsVaulted ? ["Prime Vault"] : locationsFromJson(locations);
   this.type = 'Relic';
 }
 
