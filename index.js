@@ -82,26 +82,6 @@ LocationQuery.prototype.processRefreshQueue = function(err, data) {
   }
 }
 
-LocationQuery.prototype.relicHasDropLocation = function(query, callback){
-  var hasDropLocation = true;
-  this.getData(function(err, dataCache){
-    if(err) {
-      callback(err, null);
-    }
-    var results = jsonQuery('components[*component~/'+query+'/i]', {
-      data: dataCache,
-      allowRegexp: true
-    });    
-    if(typeof results.value === 'undefined' || results == null){
-      callback(new Error("No value for given query - LocationQuery.prototype.relicHasDropLocation"
-                         , "warframe-location-query/index.js", 119), null);
-      return;
-    }
-    hasDropLocation = results.value[0].length > 1 ? true : false;
-    callback(null, hasDropLocation);
-  });
-}
-
 LocationQuery.prototype.getLocationsForComponent = function(query, callback){
   this.getData(function(err, dataCache){
     var defaultString = md.codeMulti+"Operator, there is no such item location available."+md.blockEnd;
