@@ -97,7 +97,7 @@ LocationQuery.prototype.relicHasDropLocation = function(query, callback){
                          , "warframe-location-query/index.js", 119), null);
       return;
     }
-    hasDropLocation = results.value.length > 1 ? true : false;
+    hasDropLocation = results.value[0].length > 1 ? true : false;
     callback(null, hasDropLocation);
   });
 }
