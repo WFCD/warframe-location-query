@@ -1,18 +1,30 @@
-var md = require('node-md-config');
+'use strict';
 
-var _utils = require('./_utils.js');
-var toTitleCase = require('./_utils.js').toTitleCase;
+const md = require('node-md-config');
+const toTitleCase = require('./_utils.js').toTitleCase;
+const Item = require('./Item.js');
 
-var locationsFromJson = function(locations){
-  var locListReturn = [];
-  for(var i in locations){
-    var location = padLocation(i) + " | "
-    var tokens = [];
-    for(j in locations[i]){
-      if(locations[i][j][1] === ""){
-        tokens.push(locations[i][j][0]);
+function padLocation(locationString) {
+  let str;
+  if (locationString.length < 8) {
+    str = padLocation(`${locationString} `);
+  } else {
+    str = locationString;
+  }
+  return str;
+}
+
+function locationsFromJson(locations) {
+  const locListReturn = [];
+  for (const loc of locations) {
+    const location = `${padLocation(loc)} | `;
+    const locAray = loc;
+    const tokens = [];
+    for (const subLoc of locAray) {
+      if (subLoc[1] === '') {
+        tokens.push(subLoc[0]);
       } else {
-        tokens.push(locations[i][j][0] + " ("+locations[i][j][1].toLowerCase()+")");
+        tokens.push(`${subLoc[0]} (${subLoc[1].toLowerCase()})`);
       }
     }
     locListReturn.push(location + tokens.join(', '));
@@ -20,25 +32,20 @@ var locationsFromJson = function(locations){
   return locListReturn;
 }
 
-var Relic = function(name, locations){
-  var LocationQuery = require('../../index.js');
-  var relicCheckr = new LocationQuery();
-  var relicIsVaulted = locations == '';
-  this.name = toTitleCase(name) + (relicIsVaulted ? " - Vaulted" : "");
-  this.locations = relicIsVaulted ? ["Prime Vault"] : locationsFromJson(locations);
-  this.type = 'Relic';
-}
 
-Relic.prototype.toString = function() {
-  return this.name + ": "+md.lineEnd+"　　" + 
-    this.locations.join(","+md.lineEnd+"　　");
-}
+class Relic extends Item {
+  constructor(data) {
+    super();
+    const relicIsVaulted = data.locations === '';
+    this.component = `${toTitleCase(data.component)}${(relicIsVaulted ? ' - Vaulted' : '')}`;
+    this.locations = relicIsVaulted ? ['Prime Vault'] : locationsFromJson(data.locations);
+    this.type = 'Relic';
+  }
 
-var padLocation = function(locationString){
-  if(locationString.length < "Derelict".length){
-    return padLocation(locationString + " ");
-  } else {
-    return locationString;
+  toString() {
+    const extraSpace = '　　';
+    return `${this.name}: ${md.lineEnd}${extraSpace}
+      ${this.locations.join(`,${md.lineEnd}${extraSpace}`)}`;
   }
 }
 
