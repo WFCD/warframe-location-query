@@ -3,7 +3,7 @@
 const md = require('node-md-config');
 const jsonQuery = require('json-query');
 const Cache = require('json-fetch-cache');
-const ComponentHandler = require('./src/ComponentHandler.js');
+const ComponentHandler = require('./lib/ComponentHandler.js');
 
 const url = 'http://xenogelion.com/Hidden/Relics.json';
 
