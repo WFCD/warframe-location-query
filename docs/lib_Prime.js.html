@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>json-fetch-cache Class: Item</title>
+	<title>json-fetch-cache Source: lib/Prime.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,297 +60,82 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: Item</h1>
+		<h1 class="page-title">Source: lib/Prime.js</h1>
+    
 <section>
-
-<header>
-    
-        <h2>
-        Item
-        </h2>
-        
-            <div class="class-description">Represents a generic object from the json at http://xenogelion.com/Hidden/Relics.json</div>
-        
-    
-</header>
-
-
-<article>
-    <div class="container-overview">
-    
-        
-<hr>
-<dt>
-    <h4 class="name" id="Item"><span class="type-signature"></span>new Item(data)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The object data specifying information</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="lib_Item.js.html">lib/Item.js</a>,
-				 <a href="lib_Item.js.html#sunlight-1-line-6">line 6</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="toString"><span class="type-signature"></span>toString()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Returns a string representation of the object
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="lib_Item.js.html">lib/Item.js</a>,
-				 <a href="lib_Item.js.html#sunlight-1-line-17">line 17</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-
-    
-</article>
-
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
+
+const md = require('node-md-config');
+const Item = require('./Item.js');
+const RelicSort = require('./_utils.js').relicSort;
+
+/**
+ * Describes a PrimePart Item
+ */
+class PrimePart extends Item {
+  /**
+   * @param {Object} data JSON object containing data about this Prime Part
+   */
+  constructor(data) {
+    super(data);
+    this.component = data.component;
+    this.ducats = typeof data.ducats !== 'undefined' ? data.ducats : '0';
+    this.locations = data.location;
+    this.type = 'Prime Part';
+  }
+
+  /**
+   * Add a location to this PrimePart's list of locations
+   * @param {string} locationToAdd 
+   */
+  addLocation(locationToAdd) {
+    const self = this;
+    let locationInLocations = false;
+    self.locations.forEach((existingLocation) => {
+      if ((locationToAdd.toLowerCase() === existingLocation.toLowerCase())) {
+        locationInLocations = true;
+      }
+    });
+
+    if (!locationInLocations) {
+      self.locations.push(locationToAdd);
+    }
+  }
+  
+  /**
+   * Add all locations from an array to the locations array
+   * @param {Array&lt;string>} locations locations to add 
+   */
+  addAll(locations) {
+    for (const location of locations) {
+      if (location) {
+        this.addLocation(location);
+      }
+    }
+  }
+
+  /**
+   * String representation of this PrimePart
+   * @returns {string} string of this PrimePart
+   */
+  toString() {
+    const extraSpace = '　　';
+    return `${this.component} worth ${this.ducats}: ${md.lineEnd}${extraSpace}${this.locations.sort(RelicSort).join(`,${md.lineEnd}${extraSpace}`)}`;
+  }
+}
+
+module.exports = PrimePart;
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -360,10 +145,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
@@ -392,7 +173,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a>
 	
-		on Wednesday, October 19th 2016, 17:10:44
+		on Wednesday, October 19th 2016, 17:10:43
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

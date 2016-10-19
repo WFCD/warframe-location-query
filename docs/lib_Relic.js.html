@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>json-fetch-cache Class: Item</title>
+	<title>json-fetch-cache Source: lib/Relic.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,297 +60,76 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: Item</h1>
+		<h1 class="page-title">Source: lib/Relic.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
 
-<header>
+const md = require('node-md-config');
+const toTitleCase = require('./_utils.js').toTitleCase;
+const locationsFromJson = require('./_utils.js').locationsFromJson;
+const Item = require('./Item.js');
+
+
+/**
+ * Describes a Relic Item
+ */
+class Relic extends Item {
+  /**
+   * @param {Object} data JSON object containing data about this Relic
+   */
+  constructor(data) {
+    super();
+    const relicIsVaulted = data.locations === '';
+    /**
+     * The component string information, including whether or not it's vaulted
+     * @type {string}
+     */
+    this.component = `${toTitleCase(data.component)}${(relicIsVaulted ? ' - Vaulted' : '')}`;
     
-        <h2>
-        Item
-        </h2>
-        
-            <div class="class-description">Represents a generic object from the json at http://xenogelion.com/Hidden/Relics.json</div>
-        
+    /**
+     * List of relic locations, if the relic is vaulted, it's a singleton list with just 'Prime Vault' included
+     * @type {Array&lt;string>}
+     */
+    this.locations = relicIsVaulted ? ['Prime Vault'] : locationsFromJson(data.locations);
     
-</header>
-
-
-<article>
-    <div class="container-overview">
-    
-        
-<hr>
-<dt>
-    <h4 class="name" id="Item"><span class="type-signature"></span>new Item(data)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The object data specifying information</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="lib_Item.js.html">lib/Item.js</a>,
-				 <a href="lib_Item.js.html#sunlight-1-line-6">line 6</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="toString"><span class="type-signature"></span>toString()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Returns a string representation of the object
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="lib_Item.js.html">lib/Item.js</a>,
-				 <a href="lib_Item.js.html#sunlight-1-line-17">line 17</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-
-    
-</article>
-
+    /**
+     * Type of the Item, will always be relic for Relic objects
+     * @type {string}
+     */
+    this.type = 'Relic';
+  }
+  
+  /**
+   * Get the location string
+   * @returns {string}
+   */
+  get location() {
+    return this.locations.join(`,${md.lineEnd}${extraSpace}`);
+  }
+
+  /**
+   * String representation of Relic
+   * @returns {string}
+   */
+  toString() {
+    const extraSpace = '　　';
+    return `${this.name}: ${md.lineEnd}${extraSpace}${location}`;
+  }
+}
+
+module.exports = Relic;
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -360,10 +139,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
@@ -392,7 +167,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a>
 	
-		on Wednesday, October 19th 2016, 17:10:44
+		on Wednesday, October 19th 2016, 17:10:43
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
