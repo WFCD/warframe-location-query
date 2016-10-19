@@ -9,11 +9,23 @@ const url = 'http://xenogelion.com/Hidden/Relics.json';
 
 const maxCacheLength = process.env.LOCATION_MAX_CACHED_TIME || 60000;
 
+/**
+ * Describes a query against the location data at http://xenogelion.com/Hidden/Relics.json
+ */
 class LocationQuery {
+  
+  /**
+   * Initialize Location query object, create the initial cache of data.
+   */
   constructor() {
     this.cache = new Cache(url, maxCacheLength);
   }
 
+  /**
+   * Get the locations for a component based on the desired query.
+   * @param {string} query Component query to search for the desired component with.
+   * @returns {Promise<Array<String>>}
+   */
   getLocationsForComponent(query) {
     return new Promise((resolve, reject) => {
       const defaultString = `${md.codeMulti}Operator, there is no such item location available.${md.blockEnd}`;

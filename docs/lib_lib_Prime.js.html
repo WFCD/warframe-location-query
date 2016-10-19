@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>json-fetch-cache Classes</title>
+	<title>json-fetch-cache Source: lib/lib/Prime.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,112 +67,82 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Classes</h1>
+		<h1 class="page-title">Source: lib/lib/Prime.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+const md = require('node-md-config');
+const Item = require('./Item.js');
+const RelicSort = require('./_utils.js').relicSort;
 
+/**
+ * Describes a PrimePart Item
+ */
+class PrimePart extends Item {
+  /**
+   * @param {Object} data JSON object containing data about this Prime Part
+   */
+  constructor(data) {
+    super(data);
+    this.component = data.component;
+    this.ducats = typeof data.ducats !== 'undefined' ? data.ducats : '0';
+    this.locations = data.location;
+    this.type = 'Prime Part';
+  }
 
-<article>
-    <div class="container-overview">
-    
-        
+  /**
+   * Add a location to this PrimePart's list of locations
+   * @param {string} locationToAdd 
+   */
+  addLocation(locationToAdd) {
+    const self = this;
+    let locationInLocations = false;
+    self.locations.forEach((existingLocation) => {
+      if ((locationToAdd.toLowerCase() === existingLocation.toLowerCase())) {
+        locationInLocations = true;
+      }
+    });
 
-        
-<dl class="details">
-    
+    if (!locationInLocations) {
+      self.locations.push(locationToAdd);
+    }
+  }
+  
+  /**
+   * Add all locations from an array to the locations array
+   * @param {Array&lt;string>} locations locations to add 
+   */
+  addAll(locations) {
+    for (const location of locations) {
+      if (location) {
+        this.addLocation(location);
+      }
+    }
+  }
 
-	
+  /**
+   * String representation of this PrimePart
+   * @returns {string} string of this PrimePart
+   */
+  toString() {
+    const extraSpace = '　　';
+    return `${this.component} worth ${this.ducats}: ${md.lineEnd}${extraSpace}${this.locations.sort(RelicSort).join(`,${md.lineEnd}${extraSpace}`)}`;
+  }
+}
 
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="ComponentHandler.html">ComponentHandler</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Item.html">Item</a></dt>
-            <dd></dd>
-        
-            <dt><a href="LocationQuery.html">LocationQuery</a></dt>
-            <dd></dd>
-        
-            <dt><a href="PrimePart.html">PrimePart</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Relic.html">Relic</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+module.exports = PrimePart;
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -182,10 +152,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>

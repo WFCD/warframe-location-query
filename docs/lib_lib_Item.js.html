@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>json-fetch-cache Classes</title>
+	<title>json-fetch-cache Source: lib/lib/Item.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,112 +67,42 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Classes</h1>
+		<h1 class="page-title">Source: lib/lib/Item.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+/**
+ * Represents a generic object from the json at http://xenogelion.com/Hidden/Relics.json
+ */
+class Item {
+ /**
+  * @param {Object} data The object data specifying information
+  */
+  constructor(data) {
+    this.component = data.component;
+  }
+  /**
+   * Returns a string representation of the object
+   * @returns {string}
+   */
+  toString() {
+    return `component: ${this.component}`;
+  }
+}
 
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="ComponentHandler.html">ComponentHandler</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Item.html">Item</a></dt>
-            <dd></dd>
-        
-            <dt><a href="LocationQuery.html">LocationQuery</a></dt>
-            <dd></dd>
-        
-            <dt><a href="PrimePart.html">PrimePart</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Relic.html">Relic</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+module.exports = Item;
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -182,10 +112,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>

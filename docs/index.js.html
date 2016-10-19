@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>json-fetch-cache Classes</title>
+	<title>json-fetch-cache Source: index.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,112 +67,73 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Classes</h1>
+		<h1 class="page-title">Source: index.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
 
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
+const md = require('node-md-config');
+const jsonQuery = require('json-query');
+const Cache = require('json-fetch-cache');
+const ComponentHandler = require('./src/ComponentHandler.js');
 
+const url = 'http://xenogelion.com/Hidden/Relics.json';
 
-<article>
-    <div class="container-overview">
-    
-        
+const maxCacheLength = process.env.LOCATION_MAX_CACHED_TIME || 60000;
 
-        
-<dl class="details">
-    
+/**
+ * Describes a query against the location data at http://xenogelion.com/Hidden/Relics.json
+ */
+class LocationQuery {
+  
+  /**
+   * Initialize Location query object, create the initial cache of data.
+   */
+  constructor() {
+    this.cache = new Cache(url, maxCacheLength);
+  }
 
-	
+  /**
+   * Get the locations for a component based on the desired query.
+   * @param {string} query Component query to search for the desired component with.
+   * @returns {Promise&lt;Array&lt;String>>}
+   */
+  getLocationsForComponent(query) {
+    return new Promise((resolve, reject) => {
+      const defaultString = `${md.codeMulti}Operator, there is no such item location available.${md.blockEnd}`;
+      this.cache.getData()
+        .then((dataCache) => {
+          const results = jsonQuery(`components[*component~/${query}/i]`, {
+            data: dataCache,
+            allowRegexp: true,
+          });
+          if (typeof results.value === 'undefined' || results == null) {
+            reject(new Error('No value for given query - LocationQuery#getLocationsForComponent'
+                               , 'warframe-location-query/index.js', 27));
+          }
+          const componentHandler = new ComponentHandler(results.value);
+          resolve(componentHandler.toStringList());
+        })
+        .catch((err) => {
+          resolve(defaultString);
+          reject(err);
+        });
+    });
+  }
+}
 
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="ComponentHandler.html">ComponentHandler</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Item.html">Item</a></dt>
-            <dd></dd>
-        
-            <dt><a href="LocationQuery.html">LocationQuery</a></dt>
-            <dd></dd>
-        
-            <dt><a href="PrimePart.html">PrimePart</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Relic.html">Relic</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+module.exports = LocationQuery;
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -182,10 +143,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>

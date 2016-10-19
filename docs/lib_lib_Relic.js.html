@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>json-fetch-cache Classes</title>
+	<title>json-fetch-cache Source: lib/lib/Relic.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,112 +67,112 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	<h1 class="page-title">Classes</h1>
+		<h1 class="page-title">Source: lib/lib/Relic.js</h1>
+    
 <section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
 
-<header>
+const md = require('node-md-config');
+const toTitleCase = require('./_utils.js').toTitleCase;
+const Item = require('./Item.js');
+
+/**
+ * Pad the location string to be a uniform width under monospace situations
+ * @param {string} locationString the base location string to pad
+ * @returns {string} the padded location string
+ */
+function padLocation(locationString) {
+  let str;
+  if (locationString.length &lt; 8) {
+    str = padLocation(`${locationString} `);
+  } else {
+    str = locationString;
+  }
+  return str;
+}
+
+/**
+ * Create locations for the relic from a given json
+ * @param {Object} locations
+ * @returns {Array&lt;string>} Array of location strings
+ */
+function locationsFromJson(locations) {
+  const locListReturn = [];
+  for (const loc of locations) {
+    const location = `${padLocation(loc)} | `;
+    const locAray = loc;
+    const tokens = [];
+    for (const subLoc of locAray) {
+      if (subLoc[1] === '') {
+        tokens.push(subLoc[0]);
+      } else {
+        tokens.push(`${subLoc[0]} (${subLoc[1].toLowerCase()})`);
+      }
+    }
+    locListReturn.push(location + tokens.join(', '));
+  }
+  return locListReturn;
+}
+
+/**
+ * Describes a Relic Item
+ */
+class Relic extends Item {
+  /**
+   * @param {Object} data JSON object containing data about this Relic
+   */
+  constructor(data) {
+    super();
+    const relicIsVaulted = data.locations === '';
+    /**
+     * The component string information, including whether or not it's vaulted
+     * @type {string}
+     */
+    this.component = `${toTitleCase(data.component)}${(relicIsVaulted ? ' - Vaulted' : '')}`;
     
-        <h2>
-        
-        </h2>
-        
+    /**
+     * List of relic locations, if the relic is vaulted, it's a singleton list with just 'Prime Vault' included
+     * @type {Array&lt;string>}
+     */
+    this.locations = relicIsVaulted ? ['Prime Vault'] : locationsFromJson(data.locations);
     
-</header>
+    /**
+     * Type of the Item, will always be relic for Relic objects
+     * @type {string}
+     */
+    this.type = 'Relic';
+  }
+  
+  /**
+   * Get the location string
+   * @returns {string}
+   */
+  get location() {
+    return this.locations.join(`,${md.lineEnd}${extraSpace}`);
+  }
 
+  /**
+   * String representation of Relic
+   * @returns {string}
+   */
+  toString() {
+    const extraSpace = '　　';
+    return `${this.name}: ${md.lineEnd}${extraSpace}${location}`;
+  }
+}
 
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="ComponentHandler.html">ComponentHandler</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Item.html">Item</a></dt>
-            <dd></dd>
-        
-            <dt><a href="LocationQuery.html">LocationQuery</a></dt>
-            <dd></dd>
-        
-            <dt><a href="PrimePart.html">PrimePart</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Relic.html">Relic</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+module.exports = Relic;
+</pre>
+    </article>
 </section>
+
 
 
 
@@ -182,10 +182,6 @@
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
