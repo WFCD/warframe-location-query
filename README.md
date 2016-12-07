@@ -1,6 +1,6 @@
 # warframe-location-query
 
-[![Supported by Warframe Community Developers](https://github.com/Warframe-Community-Developers/banner/blob/master/banner.png)](https://github.com/Warframe-Community-Developers)
+[![Supported by Warframe Community Developers](https://github.com/Warframe-Community-Developers/banner/blob/master/banner.png)](https://github.com/Warframe-Community-Developers "Supported by Warframe Community Developers")
 
 A node project for fetching data from `http://xenogelion.com/Hidden/Relics.json` to give data about relic and prime part drops.
 
