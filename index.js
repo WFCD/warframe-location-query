@@ -1,8 +1,7 @@
 'use strict';
 
-const md = require('node-md-config');
 const jsonQuery = require('json-query');
-const Cache = require('json-fetch-cache');
+const JSONCache = require('json-fetch-cache');
 const ComponentHandler = require('./lib/ComponentHandler.js');
 
 const url = 'http://xenogelion.com/Hidden/Relics.json';
@@ -18,7 +17,7 @@ class LocationQuery {
    * Initialize Location query object, create the initial cache of data.
    */
   constructor() {
-    this.cache = new Cache(url, maxCacheLength);
+    this.cache = new JSONCache(url, maxCacheLength);
   }
 
   /**
@@ -28,8 +27,8 @@ class LocationQuery {
    */
   getLocationsForComponent(query) {
     return new Promise((resolve, reject) => {
-      const defaultString = `${md.codeMulti}Operator, there is no such item location available.${md.blockEnd}`;
-      this.cache.getData()
+      const defaultString = 'Operator, there is no such item location available.';
+      this.cache.getDataJson()
         .then((dataCache) => {
           const results = jsonQuery(`components[*component~/${query}/i]`, {
             data: dataCache,
@@ -42,9 +41,8 @@ class LocationQuery {
           const componentHandler = new ComponentHandler(results.value);
           resolve(componentHandler.toStringList());
         })
-        .catch((err) => {
+        .catch(() => {
           resolve(defaultString);
-          reject(err);
         });
     });
   }
@@ -56,8 +54,8 @@ class LocationQuery {
    */
   getAll(query) {
     return new Promise((resolve, reject) => {
-      const defaultString = `${md.codeMulti}Operator, there is no such item location available.${md.blockEnd}`;
-      this.cache.getData()
+      const defaultString = 'Operator, there is no such item location available.';
+      this.cache.getDataJson()
         .then((dataCache) => {
           const results = jsonQuery(`components[*component~/${query}/i]`, {
             data: dataCache,
