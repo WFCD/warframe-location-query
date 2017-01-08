@@ -25,11 +25,11 @@
   "homepage": "https://github.com/aliasfalse/warframe-location-query#README",
   "dependencies": {
     "jsdoc": "^3.4.2",
-    "json-fetch-cache": "^0.0.4",
+    "json-fetch-cache": "0.0.5",
     "json-query": "^2.1.1",
     "node-md-config": "^2.0.1"
   },
-  "devDependencies" : {
+  "devDependencies": {
     "eslint": "^3.7.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^1.16.0",
