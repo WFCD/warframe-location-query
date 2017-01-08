@@ -25,7 +25,7 @@
   "homepage": "https://github.com/aliasfalse/warframe-location-query#README",
   "dependencies": {
     "jsdoc": "^3.4.2",
-    "json-fetch-cache": "^0.0.3",
+    "json-fetch-cache": "^0.0.4",
     "json-query": "^2.1.1",
     "node-md-config": "^2.0.1"
   },
