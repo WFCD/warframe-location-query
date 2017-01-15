@@ -66,11 +66,11 @@ class LocationQuery {
                                , 'warframe-location-query/index.js', 67));
           }
           const componentHandler = new ComponentHandler(results.value);
-          resolve(componentHandler.getAll());
+          resolve(componentHandler.components);
         })
         .catch((err) => {
+          this.logger.error(err.stack);
           resolve(defaultString);
-          reject(err);
         });
     });
   }
