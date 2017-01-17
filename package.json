@@ -1,6 +1,6 @@
 {
   "name": "warframe-location-query",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Query a database of relic drops and locations for looking up where prime parts and relics drop.",
   "main": "index.js",
   "scripts": {
